@@ -1,0 +1,71 @@
+/* eventlist.css */
+
+/* Style for the main container */
+.eventlist-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Style for the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for table headers */
+  th {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  /* Style for table cells */
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  /* Style for buttons */
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Style for form inputs */
+  input[type="text"],
+  input[type="datetime-local"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Style for form submit button */
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
