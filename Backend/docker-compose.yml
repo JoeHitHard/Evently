@@ -1,27 +1,27 @@
 version: '3.8'
 
 services:
-  as:
+  evently-attendee-service:
     build:
-      context: ./as
+      context: ./evently-attendee
       dockerfile: Dockerfile
     depends_on:
       - postgres
     ports:
       - "8081:8081"
     networks:
-      - ems-network
+      - evently-network
 
-  es:
+  evently-events-service:
     build:
-      context: ./es
+      context: ./evently-events
       dockerfile: Dockerfile
     depends_on:
       - postgres
     ports:
       - "8082:8082"
     networks:
-      - ems-network
+      - evently-network
 
   postgres:
     build: .
@@ -30,12 +30,12 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+      POSTGRES_DB: evently
+      POSTGRES_USER: evently
+      POSTGRES_PASSWORD: evently
     networks:
-      - ems-network
+      - evently-network
 
 networks:
-  ems-network:
+  evently-network:
     driver: bridge

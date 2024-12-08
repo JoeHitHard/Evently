@@ -3,8 +3,10 @@ import EventList from './EventList';
 
 function App() {
   return (
-    <div className="App">
-      <EventList />
+    <div className="app-container">
+      <main>
+        <EventList />
+      </main>
     </div>
   );
 }

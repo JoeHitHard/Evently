@@ -1,5 +1,5 @@
-// CreateEventForm.js
 import React, { useState, useEffect } from 'react';
+import './createeventform.css';
 
 function CreateEventForm({ eventData, onCreateEvent, onClose }) {
   const [formData, setFormData] = useState({
@@ -8,11 +8,10 @@ function CreateEventForm({ eventData, onCreateEvent, onClose }) {
     eventTime: '',
     ownerName: '',
     ownerEmail: '',
-    password: ''
+    password: '',
   });
 
   useEffect(() => {
-    // Populate form fields with existing event details when editing
     if (eventData) {
       setFormData({
         eventName: eventData.eventName,
@@ -20,7 +19,7 @@ function CreateEventForm({ eventData, onCreateEvent, onClose }) {
         eventTime: eventData.eventTime,
         ownerName: eventData.ownerName,
         ownerEmail: eventData.ownerEmail,
-        password: '' // Assuming password field should not be populated when editing
+        password: '', // Clear password when editing
       });
     }
   }, [eventData]);
@@ -32,28 +31,86 @@ function CreateEventForm({ eventData, onCreateEvent, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Use different function for editing an existing event
-    if (eventData) {
-      // Pass the updated event data to the parent component for handling
-      onCreateEvent(formData);
-    } else {
-      // For creating a new event
-      onCreateEvent(formData);
-    }
+    onCreateEvent(formData);
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>{eventData ? 'Edit Event' : 'Create Event'}</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Event Name" name="eventName" value={formData.eventName} onChange={handleChange} />
-        <input type="text" placeholder="Event Address" name="eventAddress" value={formData.eventAddress} onChange={handleChange} />
-        <input type="datetime-local" placeholder="Event Time" name="eventTime" value={formData.eventTime} onChange={handleChange} />
-        <input type="text" placeholder="Owner Name" name="ownerName" value={formData.ownerName} onChange={handleChange} />
-        <input type="text" placeholder="Owner Email" name="ownerEmail" value={formData.ownerEmail} onChange={handleChange} />
-        <input type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
-        <button type="submit">{eventData ? 'Save' : 'Create'}</button>
-        <button type="button" onClick={onClose}>Cancel</button>
+      <form onSubmit={handleSubmit} className="event-form">
+        <div className="form-group">
+          <label>Event Name</label>
+          <input
+            type="text"
+            name="eventName"
+            value={formData.eventName}
+            onChange={handleChange}
+            placeholder="Enter event name"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Event Address</label>
+          <input
+            type="text"
+            name="eventAddress"
+            value={formData.eventAddress}
+            onChange={handleChange}
+            placeholder="Enter event address"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Event Time</label>
+          <input
+            type="datetime-local"
+            name="eventTime"
+            value={formData.eventTime}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Owner Name</label>
+          <input
+            type="text"
+            name="ownerName"
+            value={formData.ownerName}
+            onChange={handleChange}
+            placeholder="Enter owner name"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Owner Email</label>
+          <input
+            type="email"
+            name="ownerEmail"
+            value={formData.ownerEmail}
+            onChange={handleChange}
+            placeholder="Enter owner email"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Enter password"
+            required={!eventData} // Password is required only for new events
+          />
+        </div>
+        <div className="form-buttons">
+          <button type="submit" className="submit-btn">
+            {eventData ? 'Save Changes' : 'Create Event'}
+          </button>
+          <button type="button" className="cancel-btn" onClick={onClose}>
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );

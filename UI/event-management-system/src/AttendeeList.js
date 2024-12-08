@@ -1,6 +1,6 @@
-// AttendeeList.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './AttendeeList.css';
 
 function AttendeeList({ event, onClose, onEventChange }) {
   const [attendees, setAttendees] = useState([]);
@@ -16,10 +16,10 @@ function AttendeeList({ event, onClose, onEventChange }) {
 
   const fetchAttendees = (eventId) => {
     axios.get(`http://localhost:8082/events/${eventId}`)
-      .then(response => {
+      .then((response) => {
         setAttendees(response.data.attendees);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching attendees:', error);
       });
   };
@@ -35,54 +35,64 @@ function AttendeeList({ event, onClose, onEventChange }) {
       return;
     }
 
-    axios.delete(`http://localhost:8082/events/${event.eventId}/${password}/attendee/${attendeeIdToDelete}`)
-      .then(response => {
+    axios
+      .delete(
+        `http://localhost:8082/events/${event.eventId}/${password}/attendee/${attendeeIdToDelete}`
+      )
+      .then(() => {
         fetchAttendees(event.eventId);
         setShowPasswordInput(false);
         setPassword('');
         onEventChange(); // Notify parent component about the change
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error deleting attendee:', error);
         alert('Error deleting attendee. Please check the password and try again.');
       });
   };
 
   return (
-    <div className="attendees-container">
-      <h2>Attendees for Event Name: {event.eventName}</h2>
-      <button onClick={onClose}>Close</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {attendees.map(attendee => (
-            <tr key={attendee.attendeeId}>
-              <td>{attendee.name}</td>
-              <td>{attendee.email}</td>
-              <td>
-                <button onClick={() => handleDeleteAttendee(attendee.attendeeId)}>Delete Attendee</button>
-                {showPasswordInput && attendeeIdToDelete === attendee.attendeeId && (
-                  <div>
-                    <input
-                      type="password"
-                      placeholder="Enter Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button onClick={handleConfirmDeleteAttendee}>Confirm Delete</button>
-                  </div>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="attendee-list-container">
+      <div className="attendee-header">
+        <h2>Attendees for Event: {event.eventName}</h2>
+        <button className="close-btn" onClick={onClose}>
+          Close
+        </button>
+      </div>
+      <div className="attendee-list">
+        {attendees.map((attendee) => (
+          <div key={attendee.attendeeId} className="attendee-card">
+            <div className="attendee-info">
+              <h3>{attendee.name}</h3>
+              <p>{attendee.email}</p>
+            </div>
+            <div className="attendee-actions">
+              <button
+                className="delete-btn"
+                onClick={() => handleDeleteAttendee(attendee.attendeeId)}
+              >
+                Delete
+              </button>
+              {showPasswordInput && attendeeIdToDelete === attendee.attendeeId && (
+                <div className="password-input-container">
+                  <input
+                    type="password"
+                    placeholder="Enter Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button
+                    className="confirm-btn"
+                    onClick={handleConfirmDeleteAttendee}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

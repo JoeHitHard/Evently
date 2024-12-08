@@ -1,18 +1,18 @@
 #!/bin/sh
 
-cd ./ems || exit
+cd ./evently-core || exit
 ./gradlew clean build publishToMavenLocal
 cd ..
 
 
-cd ./as || exit
+cd ./evently-attendee || exit
 ./gradlew clean build
 cd ..
 
-cd ./es || exit
+cd ./evently-events || exit
 ./gradlew clean build
 cd ..
 
-docker-compose down --rmi all --volumes --remove-orphans es as
+docker-compose down --rmi all --volumes --remove-orphans evently-event-service evently-attendee-service
 docker-compose build
 docker-compose up -d
