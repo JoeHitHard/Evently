@@ -24,6 +24,7 @@ public class AttendeeController {
     @PostMapping("/{eventId}")
     public Attendee addAttendee(@PathVariable String eventId, @RequestBody Attendee attendee) {
         Optional<Event> event = eventAccess.findById(eventId);
+        event.ifPresent(attendee::setEvent);
         return attendeeAccess.save(attendee);
     }
 
@@ -42,7 +43,14 @@ public class AttendeeController {
     @PutMapping("/{id}")
     public Attendee updateAttendee(@PathVariable String id, @RequestBody Attendee updatedAttendee) {
         updatedAttendee.setAttendeeId(id); // Ensure the ID is set
-        return attendeeAccess.save(updatedAttendee);
+        Optional<Attendee> attendee = attendeeAccess.findById(id);
+        if (attendee.isPresent()) {
+            Attendee attendeeRoe = attendee.get();
+            attendeeRoe.setEmail(updatedAttendee.getEmail());
+            attendeeRoe.setName(updatedAttendee.getName());
+            return attendeeAccess.save(attendeeRoe);
+        }
+        return updatedAttendee;
     }
 
     // Delete Operation

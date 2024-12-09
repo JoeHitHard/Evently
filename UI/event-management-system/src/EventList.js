@@ -55,6 +55,26 @@ function EventList() {
       .catch((error) => console.error('Error editing event:', error));
   };
 
+  const handleDeleteEvent = async (eventId) => {
+    const password = prompt('Please enter the password to delete this event:');
+    if (!password) {
+      alert('Deletion canceled.');
+      return;
+    }
+
+    if (window.confirm('Are you sure you want to delete this event?')) {
+      try {
+        const url = `http://localhost:8082/events/${eventId}/${password}`;
+        await axios.delete(url);
+        alert('Event deleted successfully.');
+        fetchEvents();
+      } catch (error) {
+        console.error('Error deleting event:', error);
+        alert('Failed to delete event. Please check the password and try again.');
+      }
+    }
+  };
+
   const handleShowAttendees = (event) => {
     setSelectedEvent(event);
     setShowAttendees(true);
@@ -85,6 +105,7 @@ function EventList() {
             <div className="event-actions">
               <button onClick={() => handleShowAttendees(event)}>View Attendees</button>
               <button onClick={() => handleToggleEditForm(event)}>Edit</button>
+              <button onClick={() => handleDeleteEvent(event.eventId)}>Delete</button>
             </div>
           </div>
         ))}

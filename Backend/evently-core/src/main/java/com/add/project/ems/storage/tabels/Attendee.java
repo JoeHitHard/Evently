@@ -84,4 +84,8 @@ public class Attendee {
                 .add("email='" + email + "'")
                 .toString();
     }
+
+    public void setEvent(Event event) {
+        this.events.add(event);
+    }
 }

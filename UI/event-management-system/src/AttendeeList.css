@@ -5,6 +5,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 0 auto;
+    display: block;
   }
   
   .attendee-header {
@@ -29,7 +30,7 @@
   }
   
   .attendee-list {
-    display: flex;
+    display: block;
     flex-wrap: wrap;
     gap: 1rem;
   }
